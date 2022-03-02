@@ -32,7 +32,9 @@ namespace BeehiveGasSensor
             this.components = new System.ComponentModel.Container();
             this.arduinoPort = new System.IO.Ports.SerialPort(this.components);
             this.conBut = new System.Windows.Forms.Button();
-            this.comText = new System.Windows.Forms.TextBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.comBox = new System.Windows.Forms.ComboBox();
+            this.dataBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // arduinoPort
@@ -49,19 +51,39 @@ namespace BeehiveGasSensor
             this.conBut.UseVisualStyleBackColor = true;
             this.conBut.MouseClick += new System.Windows.Forms.MouseEventHandler(this.conbut_MouseClick);
             // 
-            // comText
+            // timer1
             // 
-            this.comText.Location = new System.Drawing.Point(49, 113);
-            this.comText.Name = "comText";
-            this.comText.Size = new System.Drawing.Size(159, 31);
-            this.comText.TabIndex = 1;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // comBox
+            // 
+            this.comBox.FormattingEnabled = true;
+            this.comBox.Items.AddRange(new object[] {
+            "COM3",
+            "COM4",
+            "COM7",
+            "COM8",
+            "COM9"});
+            this.comBox.Location = new System.Drawing.Point(214, 53);
+            this.comBox.Name = "comBox";
+            this.comBox.Size = new System.Drawing.Size(132, 33);
+            this.comBox.TabIndex = 2;
+            // 
+            // dataBox
+            // 
+            this.dataBox.Location = new System.Drawing.Point(49, 124);
+            this.dataBox.Multiline = true;
+            this.dataBox.Name = "dataBox";
+            this.dataBox.Size = new System.Drawing.Size(805, 723);
+            this.dataBox.TabIndex = 3;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1294, 880);
-            this.Controls.Add(this.comText);
+            this.Controls.Add(this.dataBox);
+            this.Controls.Add(this.comBox);
             this.Controls.Add(this.conBut);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -75,7 +97,9 @@ namespace BeehiveGasSensor
 
         private System.IO.Ports.SerialPort arduinoPort;
         private System.Windows.Forms.Button conBut;
-        private System.Windows.Forms.TextBox comText;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ComboBox comBox;
+        private System.Windows.Forms.TextBox dataBox;
     }
 }
 

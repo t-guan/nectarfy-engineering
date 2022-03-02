@@ -1,0 +1,10 @@
+C:\NVD\nectarfy-engineering\BeehiveGasSensor\bin\Debug\BeehiveGasSensor.exe.config
+C:\NVD\nectarfy-engineering\BeehiveGasSensor\bin\Debug\BeehiveGasSensor.exe
+C:\NVD\nectarfy-engineering\BeehiveGasSensor\bin\Debug\BeehiveGasSensor.pdb
+C:\NVD\nectarfy-engineering\BeehiveGasSensor\obj\Debug\BeehiveGasSensor.csproj.AssemblyReference.cache
+C:\NVD\nectarfy-engineering\BeehiveGasSensor\obj\Debug\BeehiveGasSensor.Form1.resources
+C:\NVD\nectarfy-engineering\BeehiveGasSensor\obj\Debug\BeehiveGasSensor.Properties.Resources.resources
+C:\NVD\nectarfy-engineering\BeehiveGasSensor\obj\Debug\BeehiveGasSensor.csproj.GenerateResource.cache
+C:\NVD\nectarfy-engineering\BeehiveGasSensor\obj\Debug\BeehiveGasSensor.csproj.CoreCompileInputs.cache
+C:\NVD\nectarfy-engineering\BeehiveGasSensor\obj\Debug\BeehiveGasSensor.exe
+C:\NVD\nectarfy-engineering\BeehiveGasSensor\obj\Debug\BeehiveGasSensor.pdb
