@@ -16,13 +16,26 @@ namespace BeehiveGasSensor
         public Form1()
         {
             InitializeComponent();
-            ArduinoPort.BaudRate = 9600;
-
         }
-
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            arduinoPort.BaudRate = 9600;
+            arduinoPort.PortName = comText.Text;
+        }
         private void conbut_MouseClick(object sender, MouseEventArgs e)
         {
-            
+            if (arduinoPort.IsOpen == false)
+            {
+                arduinoPort.Open();
+                conBut.Text = "Disconnect";
+
+            }
+            else
+            {
+                arduinoPort.Close();
+                conBut.Text = "Connect";
+
+            }
         }
     }
 }

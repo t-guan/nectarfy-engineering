@@ -30,40 +30,52 @@ namespace BeehiveGasSensor
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.ArduinoPort = new System.IO.Ports.SerialPort(this.components);
-            this.conbut = new System.Windows.Forms.Button();
+            this.arduinoPort = new System.IO.Ports.SerialPort(this.components);
+            this.conBut = new System.Windows.Forms.Button();
+            this.comText = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // ArduinoPort
+            // arduinoPort
             // 
-            this.ArduinoPort.Parity = System.IO.Ports.Parity.Even;
+            this.arduinoPort.Parity = System.IO.Ports.Parity.Even;
             // 
-            // conbut
+            // conBut
             // 
-            this.conbut.Location = new System.Drawing.Point(49, 42);
-            this.conbut.Name = "conbut";
-            this.conbut.Size = new System.Drawing.Size(159, 52);
-            this.conbut.TabIndex = 0;
-            this.conbut.Text = "Connect";
-            this.conbut.UseVisualStyleBackColor = true;
-            this.conbut.MouseClick += new System.Windows.Forms.MouseEventHandler(this.conbut_MouseClick);
+            this.conBut.Location = new System.Drawing.Point(49, 42);
+            this.conBut.Name = "conBut";
+            this.conBut.Size = new System.Drawing.Size(159, 52);
+            this.conBut.TabIndex = 0;
+            this.conBut.Text = "Connect";
+            this.conBut.UseVisualStyleBackColor = true;
+            this.conBut.MouseClick += new System.Windows.Forms.MouseEventHandler(this.conbut_MouseClick);
+            // 
+            // comText
+            // 
+            this.comText.Location = new System.Drawing.Point(49, 113);
+            this.comText.Name = "comText";
+            this.comText.Size = new System.Drawing.Size(159, 31);
+            this.comText.TabIndex = 1;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1294, 880);
-            this.Controls.Add(this.conbut);
+            this.Controls.Add(this.comText);
+            this.Controls.Add(this.conBut);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.IO.Ports.SerialPort ArduinoPort;
-        private System.Windows.Forms.Button conbut;
+        private System.IO.Ports.SerialPort arduinoPort;
+        private System.Windows.Forms.Button conBut;
+        private System.Windows.Forms.TextBox comText;
     }
 }
 
