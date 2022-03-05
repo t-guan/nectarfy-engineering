@@ -11,6 +11,7 @@ import serial;
 import time;
 import csv;
 from queue import Queue
+from MLModel import gasPredictor
 
 #Initialize queues
 dataQueue=Queue(maxsize=0)
@@ -19,12 +20,45 @@ ThreeData=Queue(maxsize=0)
 TwoData=Queue(maxsize=0)
 TwentyData=Queue(maxsize=0)
 EightData=Queue(maxsize=0)
-
 #Initialize label array
 arrayLabel=[]
-
+#State Value Variable
+stateVal=0
+numSample=0
 #Functions
+def avgQueue(queue):
+    size=queue.qsize()
+    arraySum=0
+    while True:
+        try:
+            arraySum=arraySum+queue.get_nowait()
+        except:
+            avg=float(arraySum/size)
+            break
+    return avg
+def CreatePredArray(stateval):
+    if(stateVal==1):
+        #Average all the queues
+        ZeroAvgVal=avgQueue(ZeroData)
+        ThreeAvgVal=avgQueue(ThreeData)
+        TwoAvgVal=avgQueue(TwoData)
+        TwentyAvgVal=avgQueue(TwentyData)
+        EightAvgVal=avgQueue(EightData)
+        predArray=[ZeroAvgVal,ThreeAvgVal,TwoAvgVal,TwentyAvgVal,EightAvgVal]
+    else:
+        print("You will be prompted to enter five values.")
+        predArray=[]
+        for i in range(0, 5):
+            while True:
+                try:
+                    val = int(input("Please input value: "))
+                    break
+                except:
+                    print("That is not a valid integer. Try again.")
+        predArray.append(val) 
+    return predArray
 def dataCollect():
+    
     
     #Init Serial
     arduino = serial.Serial(port='COM8', baudrate=9600)
@@ -34,11 +68,14 @@ def dataCollect():
     #Time delay after every sent packet is 500ms on Arduino End
     #May need to calc for complexity for more accurate results
     t_end=time.time()+timeCollect
-    while time.time()<t_end:
-        data=arduino.readline()
-        decoded_bytes = float(data[0:len(data)-2].decode("utf-8"))
-        dataQueue.put(decoded_bytes)
-    arduino.close()
+    try:
+        while time.time()<t_end:
+            data=arduino.readline()
+            decoded_bytes = float(data[0:len(data)-2].decode("utf-8"))
+            dataQueue.put(decoded_bytes)
+        arduino.close()
+    except:
+        print("\n !!!WARNING There was a data collection issue. Please reboot kernel. WARNING!!!\n")
 def titlePrint():
     isOverwrite=input("Do you want to overwrite existing csv?(Y/N)")
     if(isOverwrite=="Y"):
@@ -88,36 +125,59 @@ def dataPrint(label):
         except:
             print("No more items in Queue")
 
-#Start of Program: User Input
+#Start of Program: Ask for state of program:
 while True:
-    try:
-        timeCollect=int(input("Please enter how long to collect data per sample: "))
+    state=input("Please select: Collection mode(C) or Prediction Mode(P) or Quit(Q)\n")
+    #Collection Mode
+    if(state=="C"):
+        input("Entering collection mode. Press enter to continue.")
+        while True:
+            try:
+                timeCollect=int(input("Please enter how long to collect data per sample: "))
+                break
+            except:
+                print("That is not an integer.")
+        while True:
+            try:
+                numSample=int(input("Please enter how many samples to collect: "))
+                break
+            except:
+                print("That is not an integer.")
+        for x in range(0,numSample):
+            arrayLabel.append(input("Please enter the label for sample #"+str(x+1)+": "))
+        
+        titlePrint()
+        #Call Functions for loop
+        for x in range(0,numSample):
+            dataCollect()
+            dataPrint(arrayLabel[x])
+            print("\nData for "+arrayLabel[x]+" has been collected.\n")
+            if(x==numSample-1):
+                print("Data collection is complete.\n")
+                arrayLabel.clear()
+            else:
+                print("Waiting for user to collect data for "+arrayLabel[x+1]+".\n")
+                input("Press Enter to proceed.")
+    elif(state=="P"):
+        #Prediction Mode
+        input("Entering prediction mode. Press enter to continue.")
+        if(numSample<=1):
+            print("Singular collection entry detected. Defaulting to collected data.")
+            stateVal=1
+        else:
+            print("There was more than one sample collected. Defaulting to manual entry.")
+            stateVal=0
+        predArray=CreatePredArray(stateVal)
+        Pred=gasPredictor(predArray)
+        print("The prediction is "+Pred)
+        stateVal=0
+    elif(state=="Q"):
+        print("Quitting...")
         break
-    except:
-        print("That is not an integer.")
-while True:
-    try:
-        numSample=int(input("Please enter how many samples to collect: "))
-        break
-    except:
-        print("That is not an integer.")
-for x in range(0,numSample):
-    arrayLabel.append(input("Please enter the label for sample #"+str(x+1)+": "))
-
-titlePrint()
-#Call Functions for loop
-for x in range(0,numSample):
-    dataCollect()
-    dataPrint(arrayLabel[x])
-    print("\nData for "+arrayLabel[x]+" has been collected.\n")
-    if(x==numSample-1):
-        print("Data collection is complete.\n")
     else:
-        print("Waiting for user to collect data for "+arrayLabel[x+1]+".\n")
-        input("Press Enter to proceed.")
-      
+        print("That is not a valid entry. Please try again: ")
 
-print("Done!")
+print("GoodBye!")
         
     
             
