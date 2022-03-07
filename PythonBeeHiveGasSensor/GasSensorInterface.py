@@ -25,6 +25,7 @@ arrayLabel=[]
 #State Value Variable
 stateVal=0
 numSample=0
+motortimeCollect=5
 #Functions
 def avgQueue(queue):
     size=queue.qsize()
@@ -58,11 +59,12 @@ def CreatePredArray(stateval):
         predArray.append(val) 
     return predArray
 def dataCollect():
-    
-    
     #Init Serial
     arduino = serial.Serial(port='COM8', baudrate=9600)
     arduino.flushInput()
+    print("Synchronizing for sensor reading....standby")
+    time.sleep(3)
+    arduino.write(b'H')
     #Change the time value as required
     #Currently gives 6 full rows of data and one row of garbage values
     #Time delay after every sent packet is 500ms on Arduino End
@@ -73,6 +75,7 @@ def dataCollect():
             data=arduino.readline()
             decoded_bytes = float(data[0:len(data)-2].decode("utf-8"))
             dataQueue.put(decoded_bytes)
+        arduino.write(b'L')
         arduino.close()
     except:
         print("\n !!!WARNING There was a data collection issue. Please reboot kernel. WARNING!!!\n")
@@ -124,7 +127,16 @@ def dataPrint(label):
                 EightData.put(eightval)
         except:
             print("No more items in Queue")
-
+def motorRun():
+    #Init Serial
+    arduino=serial.Serial(port='COM8', baudrate=9600)
+    arduino.flushInput()
+    print("Synchronizing for motor control...standby")
+    time.sleep(3)
+    arduino.write(b'M')
+    time.sleep(motortimeCollect)
+    arduino.write(b'O')
+    arduino.close()
 #Start of Program: Ask for state of program:
 while True:
     state=input("Please select: Collection mode(C) or Prediction Mode(P) or Quit(Q)\n")
@@ -149,6 +161,7 @@ while True:
         titlePrint()
         #Call Functions for loop
         for x in range(0,numSample):
+            motorRun()
             dataCollect()
             dataPrint(arrayLabel[x])
             print("\nData for "+arrayLabel[x]+" has been collected.\n")
@@ -171,6 +184,11 @@ while True:
         Pred=gasPredictor(predArray)
         print("The prediction is "+Pred)
         stateVal=0
+    elif(state=="O"):
+        print("Change the motor runtime\n")
+        print("The default runtime is currently 10 seconds")
+        motortimeCollect=int(input("Please enter new value"))
+        input("The current motor runtime has been changed. Press Enter to continue")
     elif(state=="Q"):
         print("Quitting...")
         break
