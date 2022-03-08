@@ -56,7 +56,7 @@ def CreatePredArray(stateval):
                     break
                 except:
                     print("That is not a valid integer. Try again.")
-        predArray.append(val) 
+            predArray.append(val) 
     return predArray
 def dataCollect():
     #Init Serial
@@ -65,6 +65,7 @@ def dataCollect():
     print("Synchronizing for sensor reading....standby")
     time.sleep(3)
     arduino.write(b'H')
+    print("Synchornization complete")
     #Change the time value as required
     #Currently gives 6 full rows of data and one row of garbage values
     #Time delay after every sent packet is 500ms on Arduino End
@@ -79,6 +80,7 @@ def dataCollect():
         arduino.close()
     except:
         print("\n !!!WARNING There was a data collection issue. Please reboot kernel. WARNING!!!\n")
+        arduino.close()
 def titlePrint():
     isOverwrite=input("Do you want to overwrite existing csv?(Y/N)")
     if(isOverwrite=="Y"):
@@ -133,9 +135,11 @@ def motorRun():
     arduino.flushInput()
     print("Synchronizing for motor control...standby")
     time.sleep(3)
+    print("Sychronization complete. Motor Start...")
     arduino.write(b'M')
     time.sleep(motortimeCollect)
     arduino.write(b'O')
+    print("Motor stopped.")
     arduino.close()
 #Start of Program: Ask for state of program:
 while True:
@@ -174,7 +178,7 @@ while True:
     elif(state=="P"):
         #Prediction Mode
         input("Entering prediction mode. Press enter to continue.")
-        if(numSample<=1):
+        if(numSample==1):
             print("Singular collection entry detected. Defaulting to collected data.")
             stateVal=1
         else:
