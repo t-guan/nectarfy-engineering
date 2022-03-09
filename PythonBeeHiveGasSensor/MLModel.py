@@ -58,7 +58,7 @@ def gasModelNaiveBayes():
     
 
 #Import csvs, add more if needed
-dataAir=pd.read_csv('220307_DataRH.csv')
+dataAir=pd.read_csv('220308_DataRH+DLL.csv')
 
 #Split into input and output
 inputData=dataAir.iloc[:,:-1].values
@@ -85,7 +85,7 @@ X_train, X_test, Y_train, Y_test = train_test_split(inputData, outputData, test_
 
 #Try K Nearest Neighbors
 from sklearn.neighbors import KNeighborsClassifier
-knn_clf = KNeighborsClassifier(n_neighbors=5) # change n_neighbors; boundary becomes smoother with increasing value of K
+knn_clf = KNeighborsClassifier(n_neighbors=10) # change n_neighbors; boundary becomes smoother with increasing value of K
 knn_clf.fit(X_train, Y_train)
 scores = cross_val_score(knn_clf, X_train, Y_train, scoring='accuracy', cv=5)
 print(scores)

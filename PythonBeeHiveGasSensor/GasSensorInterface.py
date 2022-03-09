@@ -65,6 +65,7 @@ def dataCollect():
     print("Synchronizing for sensor reading....standby")
     time.sleep(3)
     arduino.write(b'H')
+    ##!! Add Safety Feedback when failrue occurs!!#
     print("Synchornization complete")
     #Change the time value as required
     #Currently gives 6 full rows of data and one row of garbage values
