@@ -3,7 +3,8 @@
 Created on Wed Mar  2 15:46:16 2022
 Collects data via serialport and writes to CSV, can collect based on specific
 timeframe
-
+Collect the location and address of the Arduino board by using:
+ls /dev/tty* in the terminal
 @author: Thomas
 """
 #Libraries are in!
@@ -132,6 +133,8 @@ def dataPrint(label):
             print("No more items in Queue")
 def motorRun():
     #Init Serial
+    #The serial port in the function will have to change for the device plugged into the Arduino
+    #The location of the Arduino is at /dev/ttyUSB0, and on Thomas' PC it is on "COM8"
     arduino=serial.Serial(port='COM8', baudrate=9600)
     arduino.flushInput()
     print("Synchronizing for motor control...standby")
