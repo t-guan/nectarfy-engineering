@@ -13,7 +13,11 @@ import time;
 import csv;
 from queue import Queue
 from MLModel import gasPredictor
-
+#Serial Port Name
+     #Change the name here which will control the name in subsequent declarations
+     #For Thomas' Laptop, it is COM8
+     #For the RPi, it is /dev/ttyUSB0
+sPort='/dev/ttyUSB0'
 #Initialize queues
 dataQueue=Queue(maxsize=0)
 ZeroData=Queue(maxsize=0)
@@ -61,14 +65,16 @@ def CreatePredArray(stateval):
     return predArray
 def dataCollect():
     #Init Serial
-    arduino = serial.Serial(port='COM8', baudrate=9600)
+    #Here, the port needs to be modified.
+    #/dev/ttyUSB0
+    arduino = serial.Serial(port=sPort, baudrate=9600)
     arduino.flushInput()
     print("Synchronizing for sensor reading....standby")
     time.sleep(3)
     arduino.write(b'H')
     ##!! Add Safety Feedback when failrue occurs!!#
     print("Synchornization complete")
-    #Change the time value as required
+   #Change the time value as required
     #Currently gives 6 full rows of data and one row of garbage values
     #Time delay after every sent packet is 500ms on Arduino End
     #May need to calc for complexity for more accurate results
@@ -135,7 +141,7 @@ def motorRun():
     #Init Serial
     #The serial port in the function will have to change for the device plugged into the Arduino
     #The location of the Arduino is at /dev/ttyUSB0, and on Thomas' PC it is on "COM8"
-    arduino=serial.Serial(port='COM8', baudrate=9600)
+    arduino=serial.Serial(port=sPort, baudrate=9600)
     arduino.flushInput()
     print("Synchronizing for motor control...standby")
     time.sleep(3)
