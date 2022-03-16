@@ -17,7 +17,7 @@ from MLModel import gasPredictor
      #Change the name here which will control the name in subsequent declarations
      #For Thomas' Laptop, it is COM8
      #For the RPi, it is /dev/ttyUSB0
-sPort='/dev/ttyUSB0'
+sPort='COM5'
 #Initialize queues
 dataQueue=Queue(maxsize=0)
 ZeroData=Queue(maxsize=0)
@@ -30,7 +30,7 @@ arrayLabel=[]
 #State Value Variable
 stateVal=0
 numSample=0
-motortimeCollect=5
+motortimeCollect=60
 #Functions
 def avgQueue(queue):
     size=queue.qsize()

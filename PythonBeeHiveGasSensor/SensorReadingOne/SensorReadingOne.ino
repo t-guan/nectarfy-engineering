@@ -13,6 +13,7 @@ int ThreePin=A1;
 int TwoPin=A2;
 int TwentyPin=A3;
 int EightPin=A4;
+int pumpPin=2;
 
 
 //VALUES OUT OF DATE
@@ -26,8 +27,7 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(2,OUTPUT);
-  digitalWrite(2,LOW);
+  pinMode(pumpPin,OUTPUT);
 
 
 }
@@ -61,10 +61,10 @@ void loop() {
     }
     if (incomingByte=='M'){
       while(true){
-        digitalWrite(2,HIGH);
+        digitalWrite(pumpPin,HIGH);
         incomingByte = Serial.read();
         if(incomingByte=='O'){
-          digitalWrite(2,LOW); 
+          digitalWrite(pumpPin,LOW); 
           break;
         }
       }
