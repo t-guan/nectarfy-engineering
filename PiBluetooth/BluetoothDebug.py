@@ -1,7 +1,16 @@
+#Import Bluedot Libraries
 from bluedot import BlueDot
-bd=BlueDot(cols=3,rows=3)
+#Setup Bluedot
+bd=BlueDot(cols=5)
+#Hide the two buttons for separation
+bd[1,0].visible=False
+bd[3,0].visible=False
+#Change colors
+bd[2,0].color="green"
+bd[4,0].color="red"
+#Define Presssed Function to catch any button press
+def pressed(pos):
+    print("Button {}.{} pressed".format(pos.col,pos.row))
 while True:
-    bd[0,0].wait_for_press()
-    print("PRESS")
-    bd[1,1].wait_for_press()
-    print("PRESSTWO")
+   bd.when_pressed=pressed
+    
