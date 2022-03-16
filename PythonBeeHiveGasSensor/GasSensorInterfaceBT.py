@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Mar 16 15:25:43 2022
-Just tryin something sneaky out heh
-@author: Thomas Guan
+Created on Wed Mar  16 2022
+Does the same stuff as GasSensorInterface, but boiled down to be controlled via bluedot
+@author: Thomas
 """
 #Libraries are in!
 import serial;
@@ -11,11 +11,22 @@ import csv;
 from queue import Queue
 from MLModel import gasPredictor
 from GasSensorLib import titlePrint,motorRun,dataCollect,dataPrint,CreatePredArray
+#BlueDot Setup
+from bluedot import BlueDot
+#Setup Bluedot
+bd=BlueDot(cols=5)
+#Hide the two buttons for separation
+bd[1,0].visible=False
+bd[3,0].visible=False
+#Change colors
+bd[2,0].color="green"
+bd[4,0].color="red"
+  
 #Serial Port Name
      #Change the name here which will control the name in subsequent declarations
      #For Thomas' Laptop, it is COM8
      #For the RPi, it is /dev/ttyUSB0
-sPort='COM5'
+sPort='/dev/ttyUSB0'
 #Initialize queues
 dataQueue=Queue(maxsize=0)
 ZeroData=Queue(maxsize=0)
@@ -28,7 +39,7 @@ arrayLabel=[]
 #State Value Variable
 stateVal=0
 numSample=0
-motortimeCollect=2
+motortimeCollect=60
 timeCollect=0
 
 #Start of Program: Ask for state of program:
@@ -55,9 +66,9 @@ while True:
         titlePrint()
         #Call Functions for loop
         for x in range(0,numSample):
-            motorRun(motortimeCollect)
-            dataCollect(dataCollect,timeCollect,dataQueue)
-            dataPrint(dataPrint,arrayLabel[x],dataQueue,ZeroData,ThreeData,TwoData,TwentyData,EightData)
+            motorRun()
+            dataCollect()
+            dataPrint(arrayLabel[x])
             print("\nData for "+arrayLabel[x]+" has been collected.\n")
             if(x==numSample-1):
                 print("Data collection is complete.\n")
@@ -74,7 +85,7 @@ while True:
         else:
             print("There was more than one sample collected. Defaulting to manual entry.")
             stateVal=0
-        predArray=CreatePredArray(CreatePredArray,stateVal,ZeroData,ThreeData,TwoData,TwentyData,EightData)
+        predArray=CreatePredArray(stateVal)
         Pred=gasPredictor(predArray)
         print("The prediction is "+Pred)
         stateVal=0
@@ -90,3 +101,17 @@ while True:
         print("That is not a valid entry. Please try again: ")
 
 print("GoodBye!")
+        
+    
+            
+            
+
+
+    
+    
+        
+        
+    
+
+
+
