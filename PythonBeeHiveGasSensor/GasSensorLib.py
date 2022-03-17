@@ -17,7 +17,6 @@ from MLModel import gasPredictor
      #Change the name here which will control the name in subsequent declarations
      #For Thomas' Laptop, it is COM8
      #For the RPi, it is /dev/ttyUSB0
-sPort='COM5'
 #Initialize queues
 # dataQueue=Queue(maxsize=0)
 # ZeroData=Queue(maxsize=0)
@@ -59,7 +58,7 @@ def CreatePredArray(self, stateval,ZeroData,ThreeData,TwoData,TwentyData,EightDa
                     print("That is not a valid integer. Try again.")
             predArray.append(val) 
     return predArray
-def dataCollect(self,timeCollect,dataQ):
+def dataCollect(self,timeCollect,dataQ,sPort):
     #Init Serial
     #Here, the port needs to be modified.
     #/dev/ttyUSB0
@@ -137,7 +136,7 @@ def dataPrint(self,label,dataQueue,ZeroData,ThreeData,TwoData,TwentyData,EightDa
                 EightData.put(eightval)
         except:
             print("No more items in Queue")
-def motorRun(motortime):
+def motorRun(self,motortime,sPort):
     #Init Serial
     #The serial port in the function will have to change for the device plugged into the Arduino
     #The location of the Arduino is at /dev/ttyUSB0, and on Thomas' PC it is on "COM8"

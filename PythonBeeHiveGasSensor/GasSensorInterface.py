@@ -55,8 +55,8 @@ while True:
         titlePrint()
         #Call Functions for loop
         for x in range(0,numSample):
-            motorRun(motortimeCollect)
-            dataCollect(dataCollect,timeCollect,dataQueue)
+            motorRun(motorRun,motortimeCollect,sPort)
+            dataCollect(dataCollect,timeCollect,dataQueue,sPort)
             dataPrint(dataPrint,arrayLabel[x],dataQueue,ZeroData,ThreeData,TwoData,TwentyData,EightData)
             print("\nData for "+arrayLabel[x]+" has been collected.\n")
             if(x==numSample-1):

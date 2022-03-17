@@ -49,8 +49,8 @@ def Collect(pos):
     arrayLabel.append("CollectedData")
     titlePrintBT()
     #Just run once
-    motorRun(motortimeCollect)
-    dataCollect(dataCollect,timeCollect,dataQueue)
+    motorRun(motorRun,motortimeCollect,sPort)
+    dataCollect(dataCollect,timeCollect,dataQueue,sPort)
     dataPrint(dataPrint,arrayLabel[0],dataQueue,ZeroData,ThreeData,TwoData,TwentyData,EightData)
     print("\nData for "+arrayLabel[0]+" has been collected.\n")
 def Predict(pos):
