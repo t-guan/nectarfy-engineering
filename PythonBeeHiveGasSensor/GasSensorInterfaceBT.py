@@ -53,12 +53,14 @@ def Collect(pos):
     dataCollect(dataCollect,timeCollect,dataQueue,sPort)
     dataPrint(dataPrint,arrayLabel[0],dataQueue,ZeroData,ThreeData,TwoData,TwentyData,EightData)
     print("\nData for "+arrayLabel[0]+" has been collected.\n")
+    print("Back at main")
 def Predict(pos):
     stateVal=1
-    predArray=CreatePredArray(stateVal)
+    predArray=CreatePredArray(CreatePredArray,stateVal,ZeroData,ThreeData,TwoData,TwentyData,EightData)
     Pred=gasPredictor(predArray)
     print("The prediction is "+Pred)
     stateVal=0
+    print("Back at Main")
 def Kill(pos):
     killvar=1
 #Start of Program: Ask for state of program:
