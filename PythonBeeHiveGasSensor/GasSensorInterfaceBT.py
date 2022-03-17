@@ -43,6 +43,8 @@ killvar=0
 #Modify these variables if needed
 motortimeCollect=60
 timeCollect=30
+#Create exception
+class Exit(Exception): pass
 #Program comprised of functions based on BlueDot functionality
 def Collect(pos):
     timeCollect=30
@@ -63,14 +65,15 @@ def Predict(pos):
     print("Back at Main")
 def Kill(pos):
     killvar=1
+    raise Exit
 #Start of Program: Ask for state of program:
-while True:
-    bd[0,0].when_pressed=Collect  
-    bd[2,0].when_pressed=Predict
-    bd[4,0].when_pressed=Kill
-    if(killvar==1):
-        break
-print("GoodBye!")
+try:
+    while True:
+        bd[0,0].when_pressed=Collect  
+        bd[2,0].when_pressed=Predict
+        bd[4,0].when_pressed=Kill
+except Exit:
+    print("GoodBye!")
         
     
             
