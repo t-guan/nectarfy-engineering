@@ -97,7 +97,11 @@ def titlePrint():
             writer.writerow(["TGS2600","TGS2603","TGS2602","TGS2620","TGS832A", "Label"])
     else:
         print("That is not a valid input.")
-        titlePrint()                   
+        titlePrint()  
+def titlePrintBT():
+    with open("test_data.csv","w", newline='') as f:
+        writer = csv.writer(f,delimiter=",")
+        writer.writerow(["TGS2600","TGS2603","TGS2602","TGS2620","TGS832A", "Label"])                 
 def dataPrint(self,label,dataQueue,ZeroData,ThreeData,TwoData,TwentyData,EightData):
     while(dataQueue.empty()==False):
         try:

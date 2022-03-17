@@ -10,7 +10,7 @@ import time;
 import csv;
 from queue import Queue
 from MLModel import gasPredictor
-from GasSensorLib import titlePrint,motorRun,dataCollect,dataPrint,CreatePredArray
+from GasSensorLib import titlePrintBT,motorRun,dataCollect,dataPrint,CreatePredArray
 #BlueDot Setup
 from bluedot import BlueDot
 #Setup Bluedot
@@ -21,7 +21,7 @@ bd[3,0].visible=False
 #Change colors
 bd[2,0].color="green"
 bd[4,0].color="red"
-  
+
 #Serial Port Name
      #Change the name here which will control the name in subsequent declarations
      #For Thomas' Laptop, it is COM8
@@ -46,9 +46,8 @@ timeCollect=30
 #Program comprised of functions based on BlueDot functionality
 def Collect(pos):
     timeCollect=30
-    numSample=1
     arrayLabel.append("CollectedData")
-    titlePrint()
+    titlePrintBT()
     #Just run once
     motorRun(motortimeCollect)
     dataCollect(dataCollect,timeCollect,dataQueue)
