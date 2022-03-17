@@ -64,7 +64,6 @@ def Predict(pos):
     stateVal=0
     print("Back at Main")
 def Kill(pos):
-    killvar=1
     raise Exit
 #Start of Program: Ask for state of program:
 try:
