@@ -39,67 +39,36 @@ arrayLabel=[]
 #State Value Variable
 stateVal=0
 numSample=0
+killvar=0
+#Modify these variables if needed
 motortimeCollect=60
-timeCollect=0
-
+timeCollect=30
+#Program comprised of functions based on BlueDot functionality
+def Collect(pos):
+    timeCollect=30
+    numSample=1
+    arrayLabel.append("CollectedData")
+    titlePrint()
+    #Just run once
+    motorRun(motortimeCollect)
+    dataCollect(dataCollect,timeCollect,dataQueue)
+    dataPrint(dataPrint,arrayLabel[0],dataQueue,ZeroData,ThreeData,TwoData,TwentyData,EightData)
+    print("\nData for "+arrayLabel[0]+" has been collected.\n")
+def Predict(pos):
+    stateVal=1
+    predArray=CreatePredArray(stateVal)
+    Pred=gasPredictor(predArray)
+    print("The prediction is "+Pred)
+    stateVal=0
+def Kill(pos):
+    killvar=1
 #Start of Program: Ask for state of program:
 while True:
-    state=input("Please select: Collection mode(C) or Prediction Mode(P) or Quit(Q)\n")
-    #Collection Mode
-    if(state=="C"):
-        input("Entering collection mode. Press enter to continue.")
-        while True:
-            try:
-                timeCollect=int(input("Please enter how long to collect data per sample: "))
-                break
-            except:
-                print("That is not an integer.")
-        while True:
-            try:
-                numSample=int(input("Please enter how many samples to collect: "))
-                break
-            except:
-                print("That is not an integer.")
-        for x in range(0,numSample):
-            arrayLabel.append(input("Please enter the label for sample #"+str(x+1)+": "))
-        
-        titlePrint()
-        #Call Functions for loop
-        for x in range(0,numSample):
-            motorRun()
-            dataCollect()
-            dataPrint(arrayLabel[x])
-            print("\nData for "+arrayLabel[x]+" has been collected.\n")
-            if(x==numSample-1):
-                print("Data collection is complete.\n")
-                arrayLabel.clear()
-            else:
-                print("Waiting for user to collect data for "+arrayLabel[x+1]+".\n")
-                input("Press Enter to proceed.")
-    elif(state=="P"):
-        #Prediction Mode
-        input("Entering prediction mode. Press enter to continue.")
-        if(numSample==1):
-            print("Singular collection entry detected. Defaulting to collected data.")
-            stateVal=1
-        else:
-            print("There was more than one sample collected. Defaulting to manual entry.")
-            stateVal=0
-        predArray=CreatePredArray(stateVal)
-        Pred=gasPredictor(predArray)
-        print("The prediction is "+Pred)
-        stateVal=0
-    elif(state=="O"):
-        print("Change the motor runtime\n")
-        print("The default runtime is currently 10 seconds")
-        motortimeCollect=int(input("Please enter new value"))
-        input("The current motor runtime has been changed. Press Enter to continue")
-    elif(state=="Q"):
-        print("Quitting...")
+    bd[0,0].when_pressed=Collect  
+    bd[2,0].when_pressed=Predict
+    bd[4,0].when_pressed=Kill
+    if(killvar==1):
         break
-    else:
-        print("That is not a valid entry. Please try again: ")
-
 print("GoodBye!")
         
     

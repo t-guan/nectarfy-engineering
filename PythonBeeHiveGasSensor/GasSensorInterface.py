@@ -25,7 +25,7 @@ TwentyData=Queue(maxsize=0)
 EightData=Queue(maxsize=0)
 #Initialize label array
 arrayLabel=[]
-#State Value Variable
+#State Value Variables
 stateVal=0
 numSample=0
 motortimeCollect=2
