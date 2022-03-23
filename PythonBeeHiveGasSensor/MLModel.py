@@ -7,7 +7,6 @@ Created on Fri Mar  4 12:16:58 2022
 #Import libraries
 import numpy as np 
 import pandas as pd
-import tensorflow as tf
 import matplotlib.pyplot as plt
 
 #Import from SKLearn
