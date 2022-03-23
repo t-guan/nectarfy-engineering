@@ -28,7 +28,7 @@ arrayLabel=[]
 #State Value Variables
 stateVal=0
 numSample=0
-motortimeCollect=2
+motortimeCollect=60
 timeCollect=0
 
 #Start of Program: Ask for state of program:

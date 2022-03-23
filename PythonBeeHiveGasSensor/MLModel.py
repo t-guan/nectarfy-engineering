@@ -58,7 +58,7 @@ def gasModelNaiveBayes():
     
 
 #Import csvs, add more if needed
-dataAir=pd.read_csv('220308_DataRH+DLL.csv')
+dataAir=pd.read_csv('220323_Data_AE_Encl.csv')
 
 #Split into input and output
 inputData=dataAir.iloc[:,:-1].values
