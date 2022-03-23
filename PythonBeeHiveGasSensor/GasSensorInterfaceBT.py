@@ -10,7 +10,7 @@ import time;
 import csv;
 from queue import Queue
 from MLModel import gasPredictor
-from GasSensorLib import titlePrintBT,motorRun,dataCollect,dataPrint,CreatePredArray
+from GasSensorLib import titlePrintBT,motorRun,dataCollect,dataPrint,CreatePredArray,ledTrigger
 #BlueDot Setup
 from bluedot import BlueDot
 #Setup Bluedot
@@ -60,7 +60,8 @@ def Predict(pos):
     stateVal=1
     predArray=CreatePredArray(CreatePredArray,stateVal,ZeroData,ThreeData,TwoData,TwentyData,EightData)
     Pred=gasPredictor(predArray)
-    print("The prediction is "+Pred)
+    print("The prediction is "+Pred[0])
+    ledTrigger(ledTrigger,Pred[1],sPort)
     stateVal=0
     print("Back at Main")
 def Kill(pos):

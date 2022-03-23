@@ -14,6 +14,8 @@ int TwoPin=A2;
 int TwentyPin=A3;
 int EightPin=A4;
 int pumpPin=2;
+int airPin=10;
+int ethPin=11;
 
 
 //VALUES OUT OF DATE
@@ -28,6 +30,8 @@ void setup() {
   Serial.begin(9600);
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(pumpPin,OUTPUT);
+  pinMode(airPin,OUTPUT);
+  pinMode(ethPin, OUTPUT);
 
 
 }
@@ -61,6 +65,8 @@ void loop() {
     }
     if (incomingByte=='M'){
       while(true){
+        digitalWrite(airPin,LOW);
+        digitalWrite(ethPin,LOW);
         digitalWrite(pumpPin,HIGH);
         incomingByte = Serial.read();
         if(incomingByte=='O'){
@@ -69,6 +75,12 @@ void loop() {
         }
       }
     incomingByte=0;
+    }
+    if(incomingByte=='A'){
+      digitalWrite(airPin,HIGH);
+    }
+    if(incomingByte=='E'){
+      digitalWrite(ethPin,HIGH);
     }
   }
   

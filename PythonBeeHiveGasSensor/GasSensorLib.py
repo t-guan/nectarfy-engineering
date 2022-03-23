@@ -68,7 +68,7 @@ def dataCollect(self,timeCollect,dataQ,sPort):
     time.sleep(3)
     arduino.write(b'H')
     ##!! Add Safety Feedback when failrue occurs!!#
-    print("Synchornization complete")
+    print("Synchronization complete")
    #Change the time value as required
     #Currently gives 6 full rows of data and one row of garbage values
     #Time delay after every sent packet is 500ms on Arduino End
@@ -150,67 +150,15 @@ def motorRun(self,motortime,sPort):
     arduino.write(b'O')
     print("Motor stopped.")
     arduino.close()
-#REMOVE THIS SECTION WHEN I FIX THE LIBRARY THINGY
-#Start of Program: Ask for state of program:
-# while True:
-#     state=input("Please select: Collection mode(C) or Prediction Mode(P) or Quit(Q)\n")
-#     #Collection Mode
-#     if(state=="C"):
-#         input("Entering collection mode. Press enter to continue.")
-#         while True:
-#             try:
-#                 timeCollect=int(input("Please enter how long to collect data per sample: "))
-#                 break
-#             except:
-#                 print("That is not an integer.")
-#         while True:
-#             try:
-#                 numSample=int(input("Please enter how many samples to collect: "))
-#                 break
-#             except:
-#                 print("That is not an integer.")
-#         for x in range(0,numSample):
-#             arrayLabel.append(input("Please enter the label for sample #"+str(x+1)+": "))
-        
-#         titlePrint()
-#         #Call Functions for loop
-#         for x in range(0,numSample):
-#             motorRun()
-#             dataCollect()
-#             dataPrint(arrayLabel[x])
-#             print("\nData for "+arrayLabel[x]+" has been collected.\n")
-#             if(x==numSample-1):
-#                 print("Data collection is complete.\n")
-#                 arrayLabel.clear()
-#             else:
-#                 print("Waiting for user to collect data for "+arrayLabel[x+1]+".\n")
-#                 input("Press Enter to proceed.")
-#     elif(state=="P"):
-#         #Prediction Mode
-#         input("Entering prediction mode. Press enter to continue.")
-#         if(numSample==1):
-#             print("Singular collection entry detected. Defaulting to collected data.")
-#             stateVal=1
-#         else:
-#             print("There was more than one sample collected. Defaulting to manual entry.")
-#             stateVal=0
-#         predArray=CreatePredArray(stateVal)
-#         Pred=gasPredictor(predArray)
-#         print("The prediction is "+Pred)
-#         stateVal=0
-#     elif(state=="O"):
-#         print("Change the motor runtime\n")
-#         print("The default runtime is currently 10 seconds")
-#         motortimeCollect=int(input("Please enter new value"))
-#         input("The current motor runtime has been changed. Press Enter to continue")
-#     elif(state=="Q"):
-#         print("Quitting...")
-#         break
-#     else:
-#         print("That is not a valid entry. Please try again: ")
-
-# print("GoodBye!")
-        
+def ledTrigger(self,ledval,sPort):
+    arduino=serial.Serial(port=sPort, baudrate=9600)
+    arduino.flushInput()
+    time.sleep(3)
+    #Change values here
+    if(ledval==0):
+        arduino.write(b'A')
+        print("IM HERE")
+    arduino.close()
     
             
             

@@ -10,12 +10,12 @@ import time;
 import csv;
 from queue import Queue
 from MLModel import gasPredictor
-from GasSensorLib import titlePrint,motorRun,dataCollect,dataPrint,CreatePredArray
+from GasSensorLib import titlePrint,motorRun,dataCollect,dataPrint,CreatePredArray,ledTrigger
 #Serial Port Name
      #Change the name here which will control the name in subsequent declarations
      #For Thomas' Laptop, it is COM8
      #For the RPi, it is /dev/ttyUSB0
-sPort='COM5'
+sPort='COM8'
 #Initialize queues
 dataQueue=Queue(maxsize=0)
 ZeroData=Queue(maxsize=0)
@@ -72,11 +72,14 @@ while True:
             print("Singular collection entry detected. Defaulting to collected data.")
             stateVal=1
         else:
-            print("There was more than one sample collected. Defaulting to manual entry.")
+            print("Defaulting to manual entry.")
             stateVal=0
         predArray=CreatePredArray(CreatePredArray,stateVal,ZeroData,ThreeData,TwoData,TwentyData,EightData)
         Pred=gasPredictor(predArray)
-        print("The prediction is "+Pred)
+        print("The prediction is "+Pred[0])
+        print(Pred[1])
+        ledTrigger(ledTrigger, Pred[1],sPort)
+        print("HERE")
         stateVal=0
     elif(state=="O"):
         print("Change the motor runtime\n")

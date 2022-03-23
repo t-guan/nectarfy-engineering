@@ -7,7 +7,7 @@ Created on Fri Mar  4 12:16:58 2022
 #Import libraries
 import numpy as np 
 import pandas as pd
-#import tensorflow as tf
+import tensorflow as tf
 import matplotlib.pyplot as plt
 
 #Import from SKLearn
@@ -19,9 +19,10 @@ from sklearn.preprocessing import LabelEncoder
 #Define predictor function (CHANGE!!)
 def gasPredictor(array):
     #Change the predictor machine when necessary
-    prediction=knn_clf.predict(np.array([array]))
-    prediction=le.inverse_transform(prediction)
-    return(prediction)
+    predictionNT=knn_clf.predict(np.array([array]))
+    prediction=le.inverse_transform(predictionNT)
+    totpred=[prediction,predictionNT]
+    return(totpred)
 def gasModelANN():
     #Actiavte ANN using Sequential Model
     GasModel=tf.keras.models.Sequential()
