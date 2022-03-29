@@ -15,7 +15,7 @@ from GasSensorLib import titlePrint,motorRun,dataCollect,dataPrint,CreatePredArr
      #Change the name here which will control the name in subsequent declarations
      #For Thomas' Laptop, it is COM8
      #For the RPi, it is /dev/ttyUSB0
-sPort='COM8'
+sPort='COM5'
 #Initialize queues
 dataQueue=Queue(maxsize=0)
 ZeroData=Queue(maxsize=0)
@@ -77,9 +77,7 @@ while True:
         predArray=CreatePredArray(CreatePredArray,stateVal,ZeroData,ThreeData,TwoData,TwentyData,EightData)
         Pred=gasPredictor(predArray)
         print("The prediction is "+Pred[0])
-        print(Pred[1])
         ledTrigger(ledTrigger, Pred[1],sPort)
-        print("HERE")
         stateVal=0
     elif(state=="O"):
         print("Change the motor runtime\n")
