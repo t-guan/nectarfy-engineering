@@ -158,7 +158,7 @@ def ledTrigger(self,ledval,sPort):
     if(ledval==0):
         arduino.write(b'A')
     if(ledval==2):
-        arduino.wirte(b'E')
+        arduino.write(b'E')
         print("IM HERE")
     arduino.close()
     
