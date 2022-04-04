@@ -1,7 +1,7 @@
 # nectarfy-engineering
 Nectarfy Engineering
 
-Code for the Nectarfy team on the instrumentation side of the project
+Code for the Nectarfy Smart Beehive Project
 
 Includes:
 
