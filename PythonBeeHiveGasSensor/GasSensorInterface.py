@@ -15,7 +15,7 @@ from GasSensorLib import titlePrint,motorRun,dataCollect,dataPrint,CreatePredArr
      #Change the name here which will control the name in subsequent declarations
      #For Thomas' Laptop, it is COM8
      #For the RPi, it is /dev/ttyUSB0
-sPort='COM5'
+sPort='COM3'
 #Initialize queues
 dataQueue=Queue(maxsize=0)
 ZeroData=Queue(maxsize=0)
